@@ -1,0 +1,237 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef struct node{
+	int data;
+	struct node * next;
+	struct node * prev;
+}nod;
+nod * head=NULL;
+nod * tail=NULL;
+void create(){
+	nod * new1;
+	new1=new nod;
+	int item;
+	cout<<"\nEnter a node\n";
+	cin>>item;
+	if(head==NULL){
+		new1->next=NULL;
+		new1->prev=NULL;
+		new1->data=item;
+		head=new1;
+		tail=new1;
+	}else{
+		tail->next=new1;
+		new1->prev=tail;
+		new1->data=item;
+		new1->next=NULL;
+		tail=new1;
+	}
+	cout<<"Node inserted successfully\n";
+}
+void insert_first(){
+	nod * new1;
+	new1=new nod;
+	int item;
+	cout<<"\nEnter a new node\n";
+	cin>>item;
+	head->prev=new1;
+	new1->next=head;
+	new1->data=item;
+	new1->prev=NULL;
+	head=new1;
+	cout<<"\nNew Node inserted successfully\n";
+}
+void insert_last(){
+	nod * new1;
+	new1=new nod;
+	int item;
+	cout<<"\nEnter a new node\n";
+	cin>>item;
+	tail->next=new1;
+	new1->prev=tail;
+	new1->data=item;
+	new1->next=NULL;
+	tail=new1;
+	cout<<"\nNew Node inserted successfully\n";
+}
+void traverse(){
+	nod *temp=head;//int count=0;
+  if(head==NULL){
+  	cout<<"\nLinklist is empty nothing to show\n";
+  }else{
+  		cout<<"\nLink List is:\t";
+	while(temp!=NULL){
+		if(temp->next==NULL){
+			cout<<temp->data<<endl;;
+		}else{
+			cout<<temp->data<<" <--> ";
+		}
+		temp=temp->next;
+		//count++;
+	}
+	//cout<<"\nThere are "<<count<<" node present\n";
+  }
+}
+int length(){
+  int count=0;nod * temp=head;
+  if(head==NULL){
+  	cout<<"\nLinklist is empty nothing to show\n";
+  	return 0;
+  }else{
+	while(temp!=NULL){
+		temp=temp->next;
+		count++;
+	}
+
+  }
+  	return count;
+}
+void delete_first(){
+	nod * temp;
+	if(head==NULL){
+		cout<<"Linklist is empty\n";
+		
+	}else if(head==tail){
+		cout<<endl<<head->data<<" is deleted\n";
+		head=NULL;
+		tail=NULL;
+	}else{
+		cout<<endl<<head->data<<" is deleted\n";
+		temp=head;
+		head=head->next;
+		head->prev=NULL;
+		delete temp;
+		
+	}
+}
+void insertAtPos(){
+	int pos,k;
+	k=length();
+	cout<<"\nEnter the position where u insert\n";
+	cin>>pos;
+	if(pos<1){
+		cout<<"\nInvalid Index number\n";
+	}else if(k<pos) {
+		cout<<"\nIndex number out of bound\n";
+	}else{
+		int item,i=1;
+		nod * temp=head;
+		nod * new1;
+		new1=new nod;
+		cout<<"\nEnter a new node\n";
+		cin>>item;
+		while(i<pos-1){
+			temp=temp->next;
+			i++;
+		}
+		new1->prev=temp;
+		new1->next=temp->next;
+		new1->data=item;
+		temp->next=new1;
+		new1->next->prev=new1;
+		cout<<"\nNode inserted successfully\n";
+	}
+}
+void insertAfterPos(){
+		int pos,k;
+	k=length();
+	cout<<"\nEnter the position where u insert\n";
+	cin>>pos;
+	if(pos<1){
+		cout<<"\nInvalid Index number\n";
+	}else if(k<pos) {
+		cout<<"\nIndex number out of bound\n";
+	}else if(pos==k){
+		insert_last();
+	}else if(pos==1){
+		insert_first();
+	}else{
+		int item,i=1;
+		nod * temp=head;
+		nod * new1;
+		new1=new nod;
+		cout<<"\nEnter a new node\n";
+		cin>>item;
+		while(i<pos){
+			temp=temp->next;
+			i++;
+		}
+		new1->prev=temp;
+		new1->next=temp->next;
+		new1->data=item;
+		temp->next=new1;
+		new1->next->prev=new1;
+		cout<<"\nNode inserted successfully\n";
+	}
+}
+void delete_last(){
+		nod * temp;
+	if(tail==NULL){
+		cout<<"Linklist is empty\n";
+		
+	}else if(head==tail){
+		cout<<endl<<tail->data<<" is deleted\n";
+		head=NULL;
+		tail=NULL;
+	}else{
+		cout<<endl<<tail->data<<" is deleted\n";
+		temp=tail;
+		tail=tail->prev;
+		tail->next=NULL;
+		delete temp;
+		
+	}
+}
+void deleteAtPos(){
+	int pos,k;
+	k=length();
+	cout<<"\nEnter the position to be deleted\n";
+	cin>>pos;
+	if(pos<1){
+		cout<<"\nInvalid Index\n";
+	}else if(pos>k){
+		cout<<"Index out of bound\n";
+	}else if(pos==1){
+		delete_first();
+	}else if(pos==k){
+		delete_last();
+	}else{
+		int i=1;
+		nod * temp=head;
+		while(i<pos-1){
+			temp=temp->next;
+			i++;
+		}
+		cout<<temp->next->data<<" is deleted\n";
+		temp->next=temp->next->next;
+		temp->next->prev=temp;
+	}
+}
+int main(){
+	int c,l;
+	while(1){
+		cout<<"\n\n---------Double Linklist---------\n";
+		cout<<"1.Create||2.Traverse||3.Exit||4.Insert First||5.Insert Last||6.Delete First\n"
+		<<"7.Delete Last||8.Insert At Position||9.Insert After Position||10.No of nodes||11.Delete At Position\n";
+		cout<<"Enter your choice\n";
+		cin>>c;
+		switch(c){
+			case 1:create();break;
+			case 2:traverse();break;
+			case 3:exit(1);
+			case 4:insert_first();break;
+			case 5:insert_last();break;
+			case 6:delete_first();break;
+			case 7:delete_last();break;
+			case 8:insertAtPos();break;
+			case 9:insertAfterPos();break;
+			case 10: l=length();
+					cout<<"There are "<<l<<" node present\n";
+					break;
+			case 11:deleteAtPos();break;
+			default:cout<<"Wrong choice\n";
+		}
+	}
+	
+	return 0;
+}
